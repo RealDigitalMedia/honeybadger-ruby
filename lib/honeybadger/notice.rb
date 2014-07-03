@@ -337,10 +337,15 @@ module Honeybadger
     end
 
     def set_context
+      Honeybadger.write_verbose_log("set_context1: #{Thread.current.object_id} #{self.context.inspect}")
       self.context = {}
+      Honeybadger.write_verbose_log("set_context2: #{Thread.current.object_id} #{self.context.inspect}")
       self.context.merge!(Thread.current[:honeybadger_context]) if Thread.current[:honeybadger_context]
+      Honeybadger.write_verbose_log("set_context3: #{Thread.current.object_id} #{self.context.inspect}")
       self.context.merge!(args[:context]) if args[:context]
+      Honeybadger.write_verbose_log("set_context4: #{Thread.current.object_id} #{self.context.inspect}")
       self.context = nil if context.empty?
+      Honeybadger.write_verbose_log("set_context5: #{Thread.current.object_id} #{self.context.inspect}")
     end
 
     def rack_env(method)

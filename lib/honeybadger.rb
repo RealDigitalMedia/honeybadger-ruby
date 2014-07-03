@@ -175,6 +175,7 @@ module Honeybadger
     end
 
     def clear!
+      Honeybadger.write_verbose_log("Clearing: #{Thread.current.object_id} #{Thread.current[:honeybadger_context].inspect}")
       Thread.current[:honeybadger_context] = nil
     end
 
