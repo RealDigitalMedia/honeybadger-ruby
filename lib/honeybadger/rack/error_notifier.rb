@@ -43,6 +43,7 @@ module Honeybadger
           response = @app.call(env)
         rescue Exception => raised
           env['honeybadger.error_id'] = notify_honeybadger(raised, env)
+          Honeybadger.write_verbose_log("inline rescue")
           raise
         ensure
           Honeybadger.context.clear!
@@ -51,6 +52,7 @@ module Honeybadger
         framework_exception = env['rack.exception'] || env['sinatra.error']
         if framework_exception
           env['honeybadger.error_id'] = notify_honeybadger(framework_exception, env)
+          Honeybadger.write_verbose_log("framework rescue")
         end
 
         response
